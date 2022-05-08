@@ -175,7 +175,7 @@ The next step is to start the cleansing by removing data columns which are not n
 <li> NAME - which are identifier column</li>
 <li> INCOME AMT - Amount of income identified for the charity</li>
 <li> USE_CASE - Use case identified for the grant</li>
-</li>
+</ul>
 
 <img src="Resources/optimization4_data_cleaning.png">
 
