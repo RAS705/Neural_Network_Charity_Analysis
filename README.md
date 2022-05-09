@@ -1,98 +1,254 @@
-# Mapping_Earthquakes
+# Neural Network Charity Analysis
+
 ## Introduction
 
-You have been hired by the Disaster Reporting Networking to help build a website which reports earthquakes from around the world for the last week.
+Over the past 20 years Alphabet Soup has donated over 10 Billion to different agencies. Some of the money donated went to helping develop life saving technology. Some of the money donated went to climate efforts like forest reforestation. Alphabet Soup's president, Andy Glad, has asked Beks to review the avaiable data and try to help develop a way to determine if an agency is valid and the money donated from Alphabet Soup will be properly utilized.   
 
-You're new boss, Bsail, has teamed you with Sadhana.
+From Alphabet Soup’s business team, Beks received a CSV containing more than 34,000 organizations that have received funding from Alphabet Soup over the years. Within this dataset are a number of columns that capture metadata about each organization, such as the following:
 
-Basil has asked that you and Sadhana get the latest earthquake data from the US Geological Survey office.
+- EIN and NAME—Identification columns
+- APPLICATION_TYPE—Alphabet Soup application type
+- AFFILIATION—Affiliated sector of industry
+- CLASSIFICATION—Government organization classification
+- USE_CASE—Use case for funding
+- ORGANIZATION—Organization type
+- STATUS—Active status
+- INCOME_AMT—Income classification
+- SPECIAL_CONSIDERATIONS—Special consideration for application
+- ASK_AMT—Funding amount requested
+- IS_SUCCESSFUL—Was the money used effectively
 
-The website should show the following:
+## Analysis of dataset
 
+### Preparing the data
+
+The first step to preparing the data is to read the data in from the CSV file we were provided, and get it loaded  into a dataframe.
+
+<img src="Resources/original_data.png">
+
+The next step is to start the cleansing by removing data columns which are not necessary or important to the analysis. In the case of this dataset we drop the two columns, EIN and NAME, which are identifier columns.
+
+<img src="Resources/original_data_cleaning.png">
+
+The next step of the data prep is to encode the string data into usable values, 1 or 0.  The encoding process produces a dataset which looks like:
+ 
+<img src="Resources/original_data_encoding.png">
+
+Now that we have cleansed dataset, we are ready to start building our neural network and start the analysis process. We setup our first network with the following parameters:
+
+<table>
+<tr>
+<th>Layer</th>
+<th>Nodes</th>
+<th>Activation</th>
+</tr>
+<tr>
+<td>1</td>
+<td>10</td>
+<td>relu</td>
+</tr>
+<tr>
+<td>2</td>
+<td>5</td>
+<td>relu</td>
+</tr>
+<tr>
+<td>output</td>
+<td></td>
+<td>sigmoid</td>
+</tr>
+</table>
+
+<img src="Resources/original_setup.png">
+
+After training this model by running it through 100 epochs, the model showed an accuracy of 72.45%. 
+
+<img src="Resources/original_results.png">
+
+While 72.45% is not a bad rate of accuracy, it is not good enough for our purposes. So we decided to rebuild the model and try to optimize it in different ways to see if we could improve the accuracy.
+
+## Optimization Attempts
+
+The first attempt of optimization for the model was to try to utilize the same model but with larger number of nodes for the two hidden layers.
+
+<table>
+<tr>
+<th>Layer</th>
+<th>Nodes</th>
+<th>Activation</th>
+</tr>
+<tr>
+<td>1</td>
+<td>20</td>
+<td>relu</td>
+</tr>
+<tr>
+<td>2</td>
+<td>10</td>
+<td>relu</td>
+</tr>
+<tr>
+<td>output</td>
+<td></td>
+<td>sigmoid</td>
+</tr>
+</table>
+
+<img src="Resources/optimization1_setup.png">
+
+After training this model by running it through 100 epochs, the model showed an accuracy of 72.65%. A small improvement, but no where near the kind of improvement we need to utilize the model.
+
+<img src="Resources/optimization1_results.png">
+
+The second attempt of optimization for the model was to try to utilize the same model but with new activations for the two hidden layers.
+
+<table>
+<tr>
+<th>Layer</th>
+<th>Nodes</th>
+<th>Activation</th>
+</tr>
+<tr>
+<td>1</td>
+<td>20</td>
+<td>tanh</td>
+</tr>
+<tr>
+<td>2</td>
+<td>10</td>
+<td>tanh</td>
+</tr>
+<tr>
+<td>output</td>
+<td></td>
+<td>sigmoid</td>
+</tr>
+</table>
+
+<img src="Resources/optimization2_setup.png">
+
+After training this model by running it through 100 epochs, the model showed an accuracy of 72.47%. A small decrease in accuracy. Better than the original marginally, but not better than just adding nodes to the original. This is obviously not the accuracy we need to utilize the model.
+
+<img src="Resources/optimization2_results.png">
+
+The second attempt of optimization for the model was to try to utilize the same model but with new activations for the two hidden layers.
+
+<table>
+<tr>
+<th>Layer</th>
+<th>Nodes</th>
+<th>Activation</th>
+</tr>
+<tr>
+<td>1</td>
+<td>20</td>
+<td>sigmoid</td>
+</tr>
+<tr>
+<td>2</td>
+<td>10</td>
+<td>sigmoid</td>
+</tr>
+<tr>
+<td>output</td>
+<td></td>
+<td>sigmoid</td>
+</tr>
+</table>
+
+<img src="Resources/optimization3_setup.png">
+
+After training this model by running it through 100 epochs, the model showed an accuracy of 72.03%. A small decrease in accuracy. This model is the least accurate model so far, and is obviously not the accuracy we need to utilize the model.
+
+<img src="Resources/optimization3_results.png">
+
+
+## Total Model Overhaul
+
+We decided we need to try make some larger changes to see if we could raise the accuracy of our model. So we completely started over in the process. The first step to preparing the data is to read the data in from the CSV file we were provided, and get it loaded into a dataframe.
+
+<img src="Resources/optimization4_data.png">
+
+The next step is to start the cleansing by removing data columns which are not necessary or important to the analysis. In the case of this dataset we dropped four columns to make the dataset smaller and possibly less confusing to the model. We dropped
 <ul>
-	<li>Be able to show different maps to visualize the data differently</li>
-	<li>Show an earthquake occurred in the last week	</li>
-	<li>Show the magnitude of the quake</li>
-	<li>Identify the location of the earthquake</li>
-	<li>Show the tectonic fault lines for comparison</li>
-	<li>Have the capabiity to just show the major earthquakes in the last week. Those earthquakes with a magnitude of 4.5 or greater.</li>
+<li> EIN - which is an identifier column</li>
+<li> NAME - which are identifier column</li>
+<li> INCOME AMT - Amount of income identified for the charity</li>
+<li> USE_CASE - Use case identified for the grant</li>
 </ul>
 
-## Analysis
+<img src="Resources/optimization4_data_cleaning.png">
 
-The first thing that needs to occurr is to look at the data for an earthquake that the US Geological Service's feed produces. The data comes in GeoJSON format. 
+The next step of the data prep is to encode the string data into usable values, 1 or 0.  The encoding process produces a dataset which looks like:
 
-GeoJSON is an open standard format designed for representing simple geographical features, along with their non-spatial attributes. It is based on the JSON format.
+<img src="Resources/optimization4_data_encoding.png">
 
-The features include points (therefore addresses and locations), line strings (therefore streets, highways and boundaries), polygons (countries, provinces, tracts of land), and multi-part collections of these types. GeoJSON features need not represent entities of the physical world only; mobile routing and navigation apps, for example, might describe their service coverage using GeoJSON.
+With the new dataset, we decided to try changing th model as well. This attempt of optimization for the model was to try to utilize a three layer model with a mix of activation types.
 
-An example datapoint from the US Geological Service's earthquake feed is:
+<table>
+<tr>
+<th>Layer</th>
+<th>Nodes</th>
+<th>Activation</th>
+</tr>
+<tr>
+<td>1</td>
+<td>20</td>
+<td>relu</td>
+</tr>
+<tr>
+<td>2</td>
+<td>10</td>
+<td>relu</td>
+</tr>
+<tr>
+<td>3</td>
+<td>5</td>
+<td>sigmoid</td>
+</tr>
+<tr>
+<td>output</td>
+<td></td>
+<td>sigmoid</td>
+</tr>
+</table>
 
-<pre>
-{"type":"Feature",
-"properties":{
-	"mag":4.9,
-	"place":"56 km ESE of Taltal, Chile", 
-	"time":1648657807243, 
-	"updated":1648670504349, 
-	"tz":null, 
-	"url":"https://earthquake.usgs.gov/earthquakes/eventpage/us7000gyfe","detail":"https://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/us7000gyfe.geojson", 
-	"felt":2, 
-	"cdi":3.8, 
-	"mmi":null, 
-	"alert":null, 
-	"status":"reviewed", 
-	"tsunami":0, 
-	"sig":370, 
-	"net":"us", 
-	"code":"7000gyfe", 
-	"ids":",us7000gyfe,", 
-	"sources":",us,", 
-	"types":",dyfi,origin,phase-data,", 
-	"nst":null, 
-	"dmin":0.721, 
-	"rms":0.68, 
-	"gap":94, 
-	"magType":"mb", 
-	"type":"earthquake", 
-	"title":"M 4.9 - 56 km ESE of Taltal, Chile"}, 
-	"geometry":{"type":"Point","coordinates":[-70.0004,-25.6655,71.59]}, 
-	"id":"us7000gyfe"},
-</pre>
+<img src="Resources/optimization4_setup.png">
 
-## Functionality Review
-### Basemaps
+After training this model by running it through 100 epochs, the model showed an accuracy of 72.13%. A small decrease in accuracy. This model is nearly the least accurate model so far, and is obviously not the accuracy we need to utilize the model.
 
-The first request from Basil for the website was to setup the capability to utlize differnt styles of maps to help visualize the data. The different map styles we will utilize to visualize the data will be from <a name="https://www.mapbox.com/">MapBox</a>. The styles we have selected to implement on our website is:
+<img src="Resources/optimization4_results.png">
 
+
+## Final Thoughts
+
+After trying multiple iterations of different combinations of the following:
 <ul>
-	<li><a name="https://www.mapbox.com/maps/streets">A Street Map</a></li>
-	<li><a name="https://www.mapbox.com/maps/dark">A Street Map at Night</a></li>
-	<li><a name="https://www.mapbox.com/maps/satellite">A Satellite View</a></li>
+<li>activation types</li>
+<li>output types</li>
+<li>number of nodes per layer</li>
+<li>number of hidden layers</li>
 </ul>
 
-### Map Overlays
+Our accuracy didn't change much it was always between 72.0% and roughly 73.2%. None of these models were up to the specified accuracy requested by Andy Glad the company president. We will have to provide him a report stating we couldn't get to the requested level and that the dataset does not seem to support the ability to differentiate  records enough to make an accurate model to the level of accuracy requested.    
 
-The next major request from Basil is to make a map overlay which reads the US Geological services Earthquake feed. The feed <a name="https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php">USGS GeoJSON Earthquake Feed</a> can provide a number of different feeds:
+## Recommendations
 
-<ul>
-	<li>Multiple options for data for the past hour</li>
-	<li>Multiple options for data for the past day</li>
-	<li>Multiple options for data for the past 7 days</li>
-	<li>Multiple options for data for the past 30 days</li>	
-</ul>
+To reach the requested accuracy level we would have to try two things:
+<ol>
+	<li>Try to add to the dataset to help differentiate the records better</li>
+	<ul>
+		<li>Data analysis need to be done on the source system to determine if there are any other data columns avaiable, and if they can help identify if a charity is valid or not</li>
+		<li>Data analysis needs to be done on any supplementry systems which could provide any clues on whether the charity is valid or not</li>
+		<li>Outside data about the charity should be considered for addition to the dataset</li>
+	</ul>
+	<li>work on trying some more permutations of the model build</li>
+	<ul>
+		<li>Try new combinations of the activation types</li>
+		<li>Try more traing iterations say 500 or 1000</li>
+		<li>Try more nodes in our hidden layers say 50 for the first layer</li>
+		<li>We tried three layers, we could up that to say six layers</li>
+	</ul>
+</ol>
 
-After reviewing all of the different options we determine that to meet the reuirements request from Basil, we should review the optons for the past 7 days of data. The first feed we will read is for all earthquakes around the world in the past 7 days. This feed will be utilized to produce a map overlay showing all of the earthquakes and all of the details about each earthquake.
-
-<img src="earthquake_challenge\static\Resources\all_quakes.png" width="400" height="250">
-
-The second feed we will utilize to produce a map overlay shows just the major earthquakes, magnitude greater than 4.5, for the past week. This feed will give us all of the details about each major earthquake.
-
-<img src="earthquake_challenge\static\Resources\major_quakes.png" width="400" height="250">
-	
-The last data source we will utilize for building a map overlay is from GitHub, <a namee="https://github.com/fraxen/tectonicplates/tree/master/GeoJSON">Tectonic Plates</a>. This data set allows us to build an overlay on the map to show the Tectonic lines.
-
-<img src="earthquake_challenge\static\Resources\tectonic_lines.png" width="400" height="250">
-
-
-
+This problem is not unsolvable, it just will take some work and experimentation on both the data side, and on the modeling side to help achieve the requested accuracy level.
