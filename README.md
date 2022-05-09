@@ -279,4 +279,4 @@ The other way to solve this problem, is to utilize another model type which migh
 	<li>Decision Tree</li>
 </ul>
 
-This is a categorization problem, is the donation to the charity successful or not. These two types of models help with a problem like we are researching, Yes/No. I personally would lean towards the decision tree. It could build decision nodes based on many of the features in the dataset and help determine the target better. Unless you knew that there was more data available for abnalysis to try for the first option. It makes sense to try to a simler categorical model, like a decision tree, for this dataset.
+This feels like a categorization problem, is the donation to the charity successful or not. These two types of models help with a problem like we are researching, Yes/No. I personally would lean towards the decision tree. It could build decision nodes based on many of the features in the dataset and help determine the target better. Unless you knew that there was more data available for abnalysis to try for the first option. It makes sense to try to a simpler categorical model, like a decision tree, for this dataset.
