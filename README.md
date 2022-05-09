@@ -26,9 +26,23 @@ The first step to preparing the data is to read the data in from the CSV file we
 
 <img src="Resources/original_data.png">
 
-The next step is to start the cleansing by removing data columns which are not necessary or important to the analysis. In the case of this dataset we drop the two columns, EIN and NAME, which are identifier columns.
+After looking at our dataset we determine that two columns are not features or target, these columns need to be removed. So the next step is to start the cleansing by removing data columns which are not necessary or important to the analysis. In the case of this dataset we drop the two columns, EIN and NAME, which are identifier columns.
 
 <img src="Resources/original_data_cleaning.png">
+
+The next step is to identify the target of the model. In theis dataset the target is identified as the IsSuccessful column.
+
+The next step is to identify the features of the dataset so they can be prepared for encoding. In this dataset the features are:
+
+- APPLICATION_TYPE—Alphabet Soup application type
+- AFFILIATION—Affiliated sector of industry
+- CLASSIFICATION—Government organization classification
+- USE_CASE—Use case for funding
+- ORGANIZATION—Organization type
+- STATUS—Active status
+- INCOME_AMT—Income classification
+- SPECIAL_CONSIDERATIONS—Special consideration for application
+- ASK_AMT—Funding amount requested
 
 The next step of the data prep is to encode the string data into usable values, 1 or 0.  The encoding process produces a dataset which looks like:
  
@@ -234,7 +248,13 @@ Our accuracy didn't change much it was always between 72.0% and roughly 73.2%. N
 
 ## Recommendations
 
-To reach the requested accuracy level we would have to try two things:
+We have two choice to try to reach the requested accuracry level
+
+<ol>
+	<li>Work on the current neural network</li>
+	<li>Utilize a more suitable method of analysis</li>
+</ol>
+If we were decide to try to utilize the current neural network to solve this problem, to reach the requested accuracy level we would have to try two things:
 <ol>
 	<li>Try to add to the dataset to help differentiate the records better</li>
 	<ul>
@@ -252,3 +272,11 @@ To reach the requested accuracy level we would have to try two things:
 </ol>
 
 This problem is not unsolvable, it just will take some work and experimentation on both the data side, and on the modeling side to help achieve the requested accuracy level.
+
+The other way to solve this problem, is to utilize another model type which might fit the data better. The two other types that seem to fit this problem better are:
+<ul>
+	<li>Logistic regression</li>
+	<ul>Decision Tree</ul>
+</ul>
+
+This is a categorization problem, is the donation to the charity successful or not. These two types of models help with a problem like we are researching, Yes/No. I personally would lean towards the decision tree. It could build decision nodes based on many of the features in the dataset and help determine the target better. Unless you knew that there was more data available for abnalysis to try for the first option. It makes sense to try to a simler categorical model, like a decision tree, for this dataset.
